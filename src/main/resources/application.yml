@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: ${BRAIN_DB_URL}
-    username: ${BRAIN_DB_USERNAME}
-    password: ${BRAIN_DB_PASSWORD}
+    url: ${secrets.BRAIN_DB_URL}
+    username: ${secrets.BRAIN_DB_USERNAME}
+    password: ${secrets.BRAIN_DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none
