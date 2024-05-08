@@ -1,0 +1,39 @@
+name: brain-back
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Add execute permission to Gradle Wrapper
+      run: chmod +x ./gradlew      
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v3
+    - name: Build with Gradle Wrapper
+      run: ./gradlew build
+
+    - name: Build Docker image
+      run: |
+        docker build . -t ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back:latest
+
+    - name: Log into Docker Hub
+      run: docker login -u ${{ secrets.BRAIN_DOCKER_USERNAME }} -p ${{ secrets.BRAIN_DOCKER_PASSWORD }}
+
+    - name: Push Docker image to registry
+      run: docker push ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back:latest
