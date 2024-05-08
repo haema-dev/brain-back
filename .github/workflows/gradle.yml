@@ -30,10 +30,10 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build . -t ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back:latest
+        docker build . -t ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
 
     - name: Log into Docker Hub
       run: docker login -u ${{ secrets.BRAIN_DOCKER_USERNAME }} -p ${{ secrets.BRAIN_DOCKER_PASSWORD }}
 
     - name: Push Docker image to registry
-      run: docker push ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back:latest
+      run: docker push ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
