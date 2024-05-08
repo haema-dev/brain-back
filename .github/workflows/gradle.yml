@@ -45,7 +45,7 @@ jobs:
         username: ${{ secrets.BRAIN_SERVER_USERNAME }}
         key: ${{ secrets.BRAIN_SERVER_PASSWORD }}
         script: |
-          docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
-          docker stop brain-back || true
-          docker rm brain-back || true
-          docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+          sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+          sudo docker stop brain-back || true
+          sudo docker rm brain-back || true
+          sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
