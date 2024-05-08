@@ -37,3 +37,15 @@ jobs:
 
     - name: Push Docker image to registry
       run: docker push ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+
+    - name: Deploy Docker container on server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.BRAIN_SERVER_URL }}
+        username: ${{ secrets.BRAIN_SERVER_USERNAME }}
+        key: ${{ secrets.BRAIN_SERVER_PASSWORD }}
+        script: |
+          docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+          docker stop brain-back || true
+          docker rm brain-back || true
+          docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
