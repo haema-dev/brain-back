@@ -7,7 +7,7 @@ ARG JAR_FILE=build/libs/*.jar
 # Add the application's jar to the container
 COPY ${JAR_FILE} brain-back.jar
 
-# Make port 8080 available to the world outside this container
+# Make port 8081 available to the world outside this container
 EXPOSE 8081
 
 # Run the jar file
