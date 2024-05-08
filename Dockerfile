@@ -12,3 +12,5 @@ EXPOSE 8081
 
 # Run the jar file
 ENTRYPOINT ["java","-jar","/brain-back.jar"]
+
+CMD echo 'Success Deploy Brain Back'

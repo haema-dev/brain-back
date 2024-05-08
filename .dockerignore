@@ -1,0 +1,15 @@
+# Ignore files and directories commonly found in Spring Boot projects
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA 프로젝트에서 제외할 파일 및 디렉토리
+.idea/
+.gradle/
+*.iml
+*.iws
+*.ipr
+/out/
+/target/
