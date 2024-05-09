@@ -1,0 +1,3 @@
+[submodule "security-module"]
+	path = security-module
+	url = https://github.com/haema-dev/security-module.git
