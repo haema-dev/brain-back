@@ -1,0 +1,8 @@
+version: '3'
+services:
+  brain-back:
+    image: ${BRAIN_DOCKER_REGISTRY_URL}/brain-back
+    environment:
+      - DB_URL=${BRAIN_DB_URL}
+      - DB_USERNAME=${BRAIN_DB_USERNAME}
+      - DB_PASSWORD=${BRAIN_DB_PASSWORD}
