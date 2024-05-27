@@ -45,7 +45,7 @@ jobs:
         username: ${{ secrets.BRAIN_SERVER_USERNAME }}
         key: ${{ secrets.BRAIN_SSH_PRIVATE_KEY }}
         port: ${{ secrets.BRAIN_SERVER_PORT }}
-        timeout: 40s
+        timeout: 120s
         script: |
           sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
           sudo docker stop brain-back || true
