@@ -61,20 +61,10 @@ jobs:
           fi
           
           echo "Stopping existing Docker container..."
-          if sudo docker stop ***-back; then
-            echo "Container stopped successfully."
-          else
-            echo "Failed to stop the container."
-            exit 1  # 컨테이너 중지 실패 시 스크립트 종료
-          fi
+          sudo docker stop brain-back || true
           
           echo "Removing existing Docker container..."
-          if sudo docker rm ***-back; then
-            echo "Container removed successfully."
-          else
-            echo "Failed to remove the container."
-            exit 1  # 컨테이너 제거 실패 시 스크립트 종료
-          fi
+          sudo docker rm brain-back || true
           
           echo "Running new Docker container..."
           if sudo docker run -d --name ***-back -p ***81:***81 ***/***-back; then
