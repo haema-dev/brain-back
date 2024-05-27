@@ -53,31 +53,33 @@ jobs:
         #   sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
         script: |
           echo "Pulling Docker image..."
-          if sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back; then
+          if sudo docker pull ***/***-back; then
             echo "Image pulled successfully!"
           else
             echo "Failed to pull image!"
-            exit 1
+            exit 1  # 여기서 실패 시 스크립트가 종료됩니다.
           fi
-        
+          
           echo "Stopping existing Docker container..."
-          if sudo docker stop brain-back || true; then
+          if sudo docker stop ***-back; then
             echo "Container stopped successfully."
           else
             echo "Failed to stop the container."
+            exit 1  # 컨테이너 중지 실패 시 스크립트 종료
           fi
-        
+          
           echo "Removing existing Docker container..."
-          if sudo docker rm brain-back || true; then
+          if sudo docker rm ***-back; then
             echo "Container removed successfully."
           else
             echo "Failed to remove the container."
+            exit 1  # 컨테이너 제거 실패 시 스크립트 종료
           fi
-        
+          
           echo "Running new Docker container..."
-          if sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back; then
+          if sudo docker run -d --name ***-back -p ***81:***81 ***/***-back; then
             echo "Container is running."
           else
             echo "Failed to start the container."
-            exit 1
+            exit 1  # 컨테이너 실행 실패 시 스크립트 종료
           fi
