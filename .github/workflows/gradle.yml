@@ -47,13 +47,13 @@ jobs:
         port: ${{ secrets.BRAIN_SERVER_PORT }}
         timeout: 120s
         # script: |
-        #   sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+        #   sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back:latest
         #   sudo docker stop brain-back || true
         #   sudo docker rm brain-back || true
         #   sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
         script: |
           echo "Pulling Docker image..."
-          if sudo docker pull ***/***-back; then
+          if sudo docker pull ***/***-back:latest; then
             echo "Image pulled successfully!"
           else
             echo "Failed to pull image!"
