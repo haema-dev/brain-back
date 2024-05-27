@@ -46,8 +46,38 @@ jobs:
         key: ${{ secrets.BRAIN_SSH_PRIVATE_KEY }}
         port: ${{ secrets.BRAIN_SERVER_PORT }}
         timeout: 120s
+        # script: |
+        #   sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+        #   sudo docker stop brain-back || true
+        #   sudo docker rm brain-back || true
+        #   sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
         script: |
-          sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
-          sudo docker stop brain-back || true
-          sudo docker rm brain-back || true
-          sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+          echo "Pulling Docker image..."
+          if sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back; then
+            echo "Image pulled successfully!"
+          else
+            echo "Failed to pull image!"
+            exit 1
+          fi
+        
+          echo "Stopping existing Docker container..."
+          if sudo docker stop brain-back || true; then
+            echo "Container stopped successfully."
+          else
+            echo "Failed to stop the container."
+          fi
+        
+          echo "Removing existing Docker container..."
+          if sudo docker rm brain-back || true; then
+            echo "Container removed successfully."
+          else
+            echo "Failed to remove the container."
+          fi
+        
+          echo "Running new Docker container..."
+          if sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back; then
+            echo "Container is running."
+          else
+            echo "Failed to start the container."
+            exit 1
+          fi
