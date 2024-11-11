@@ -50,4 +50,4 @@ jobs:
             sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back:latest
             sudo docker stop brain-back || true
             sudo docker rm brain-back || true
-            sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+            sudo docker run -d --name brain-back -p 8081:8080 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
