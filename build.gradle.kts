@@ -72,6 +72,11 @@ dependencies {
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")// openApi 와 SwaggerUI 를 통합하기 위해 추가
 
+    // Oracle JDBC + Wallet 사용을 위한 필수 라이브러리들
+    implementation("com.oracle.database.jdbc:ojdbc8:21.5.0.0")
+    implementation("com.oracle.database.security:oraclepki:21.5.0.0")
+    implementation("com.oracle.database.security:osdt_core:21.5.0.0")
+    implementation("com.oracle.database.security:osdt_cert:21.5.0.0")
 
     // Jackson yaml
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
