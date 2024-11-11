@@ -11,5 +11,7 @@ import power.brain.problem.entity.Problem
 class BrainApplication
 
 fun main(args: Array<String>) {
+    // Application.kt 또는 아무 configuration 파일에서
+    println("Current directory: ${System.getProperty("user.dir")}")
     runApplication<BrainApplication>(*args)
 }
