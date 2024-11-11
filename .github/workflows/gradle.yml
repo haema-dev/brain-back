@@ -14,41 +14,40 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Add execute permission to Gradle Wrapper
-      run: chmod +x ./gradlew      
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-    - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      - name: Add execute permission to Gradle Wrapper
+        run: chmod +x ./gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build with Gradle Wrapper
+        run: ./gradlew build
 
-    - name: Build Docker image
-      run: |
-        docker build . -t ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+      - name: Build Docker image
+        run: |
+          docker build . -t ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
 
-    - name: Log into Docker Hub
-      run: docker login -u ${{ secrets.BRAIN_DOCKER_USERNAME }} -p ${{ secrets.BRAIN_DOCKER_PASSWORD }}
+      - name: Log into Docker Hub
+        run: docker login -u ${{ secrets.BRAIN_DOCKER_USERNAME }} -p ${{ secrets.BRAIN_DOCKER_PASSWORD }}
 
-    - name: Push Docker image to registry
-      run: docker push ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
-    
-    - name: Deploy Docker container on server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.BRAIN_SERVER_URL }}
-        username: ${{ secrets.BRAIN_SERVER_USERNAME }}
-        key: ${{ secrets.BRAIN_SSH_PRIVATE_KEY }}
-        port: ${{ secrets.BRAIN_SERVER_PORT }}
-        timeout: 120s
-        script: |
-          sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back:latest
-          sudo docker stop brain-back || true
-          sudo docker rm brain-back || true
-          sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
-        
+      - name: Push Docker image to registry
+        run: docker push ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
+
+      - name: Deploy Docker container on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.BRAIN_SERVER_URL }}
+          username: ${{ secrets.BRAIN_SERVER_USERNAME }}
+          key: ${{ secrets.BRAIN_SSH_PRIVATE_KEY }}
+          port: ${{ secrets.BRAIN_SERVER_PORT }}
+          timeout: 120s
+          script: |
+            sudo docker pull ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back:latest
+            sudo docker stop brain-back || true
+            sudo docker rm brain-back || true
+            sudo docker run -d --name brain-back -p 8081:8081 ${{ secrets.BRAIN_DOCKER_REGISTRY_URL }}/brain-back
